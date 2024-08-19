@@ -1,1 +1,69 @@
-/*  */
+/* globals.css */
+
+.keyboard-container {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .keyboard-button {
+    padding: 12px 16px; 
+    font-size: 16px; 
+    font-weight: 500; 
+    color: #ffffff; 
+    background-color: #007BFF; 
+    border: none; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+    transition: background-color 0.3s ease, transform 0.2s ease; 
+    cursor: pointer; 
+  }
+  
+  .keyboard-button:hover {
+    background-color: #0056b3; 
+    transform: scale(1.05); 
+  }
+  
+  .keyboard-button:disabled {
+    background-color: #6c757d; 
+    cursor: not-allowed; 
+    box-shadow: none; 
+  }
+  
+  .word-container {
+    font-size: 24px;
+    letter-spacing: 10px;
+  }
+
+  /* globals.css */
+
+.btn-play-again {
+    display: block;
+    float: right;
+    padding: 12px 24px; 
+    font-size: 16px; 
+    font-weight: 600; 
+    color: #ffffff; 
+    background-color: #4CAF50; 
+    border: none; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    transition: background-color 0.3s ease, transform 0.2s ease; 
+  }
+  
+  .btn-play-again:hover {
+    background-color: #45a049; 
+    transform: scale(1.05); 
+  }
+  
+  .btn-play-again:focus {
+    outline: none; 
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2); 
+  }
+  
+
+  .game-modal{
+    text-align: center;
+    margin-block: 20px;
+  }

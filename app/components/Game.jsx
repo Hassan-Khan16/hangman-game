@@ -8,6 +8,7 @@ const Game = () => {
     const [word, setWord] = useState("hangman".toUpperCase());
     const [guessedLetters, setGuessedLetters] = useState([]);
     const [wrongGuesses, setWrongGuesses] = useState(0);
+    console.log(wrongGuesses);
 
 
     useEffect(
@@ -42,7 +43,7 @@ const Game = () => {
         location.reload();
     }
 
-    const isGameOver = wrongGuesses >= word.length;
+    const isGameOver = wrongGuesses >= 6;
     const isGameWon = word.split("").every(letter => guessedLetters.includes(letter));
 
     return (
@@ -50,13 +51,16 @@ const Game = () => {
             <h1>Hangman Game</h1>
             <Word word={word} guessedLetters={guessedLetters} />
             <Keyboard handleGuess={handleGuess} guessedLetters={guessedLetters} />
-            {isGameOver && <p>You lost! The word was {word}.</p>}
-            {isGameWon && <p>Congratulations! You've won!</p>}
-            {!(isGameOver || isGameWon) && <p>The number of guesses remaining {word.length - wrongGuesses}. </p>}
             {
                 (isGameOver || isGameWon) &&
-                <button onClick={handleButton}>Play again</button>
+                <button className="btn-play-again" onClick={handleButton}>Play again</button>
             }
+            {isGameOver && <p>You lost! The word was {word}.</p>}
+            {isGameWon && <p>Congratulations! You've won!</p>}
+            {!(isGameOver || isGameWon) && <p>The number of guesses remaining {6 - wrongGuesses}. </p>}
+            <div className="game-modal">
+                <img src={`hangman-${wrongGuesses}.svg`} alt="" />
+            </div>
         </div>
     );
 };

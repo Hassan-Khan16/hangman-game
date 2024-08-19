@@ -2,7 +2,7 @@ import React from "react";
 
 const Word = ({ word, guessedLetters }) => {
   return (
-    <div style={{ fontSize: "24px", letterSpacing: "10px" }}>
+    <div className="word-container">
       {word.split("").map((letter, index) =>
         guessedLetters.includes(letter) ? letter : "_"
       ).join(" ")}
