@@ -1,10 +1,25 @@
 /* globals.css */
 
+body{
+    padding: 2rem 4rem;
+    background-color: #007BFF;
+} 
+
+p{
+    font-size: 24px;
+}
+
+.inner-body{
+    background-color: white;
+    padding: 2rem 4rem;
+    border-radius: 50px;
+}
+
 .keyboard-container {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
     gap: 10px;
-    margin-top: 20px;
+    margin-top: 30px;
   }
   
   .keyboard-button {
@@ -39,13 +54,11 @@
   /* globals.css */
 
 .btn-play-again {
-    display: block;
-    float: right;
     padding: 12px 24px; 
     font-size: 16px; 
     font-weight: 600; 
     color: #ffffff; 
-    background-color: #4CAF50; 
+    background-color: red; 
     border: none; 
     border-radius: 8px; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
@@ -53,7 +66,7 @@
   }
   
   .btn-play-again:hover {
-    background-color: #45a049; 
+    background-color: rgb(139, 0, 0); 
     transform: scale(1.05); 
   }
   
@@ -61,9 +74,23 @@
     outline: none; 
     box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2); 
   }
-  
+  .result-container {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    margin-top: 20px;
+}
 
-  .game-modal{
-    text-align: center;
-    margin-block: 20px;
-  }
+.result {
+    flex: 1;
+}
+
+.game-modal {
+    flex: 1;
+    text-align: center; 
+}
+
+.game-modal img {
+    max-width: 100%;
+    height: auto; 
+}
