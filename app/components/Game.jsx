@@ -1,45 +1,65 @@
-"use client"
-import React, { useEffect, useState } from "react";
-import Word from "./Word";
-import Keyboard from "./Keyboard";
+"use client";
+
+import React, { useEffect, useState, useRef } from 'react';
+import Word from './Word';
+import Keyboard from './Keyboard';
+import Confetti from 'react-confetti'
 
 const Game = () => {
-
-    const [word, setWord] = useState("hangman".toUpperCase());
+    const [word, setWord] = useState("HANGMAN");
+    const [hint, setHint] = useState("");
     const [guessedLetters, setGuessedLetters] = useState([]);
+    const [wrongGuessedLetters, setWrongGuessedLetters] = useState([]);
     const [wrongGuesses, setWrongGuesses] = useState(0);
-    console.log(wrongGuesses);
+    const [isLoading, setIsLoading] = useState(true);
+    const fetchedRef = useRef(false);
+
+    const fetchWord = async () => {
+        try {
+            const response = await fetch('/api/fetch-word');
+            if (response.ok) {
+                const data = await response.json();
+                setWord(data.word.toUpperCase());
+                setHint(data.hint);
+                console.log(data.word);
+            } else {
+                console.error('Failed to fetch word');
+            }
+        } catch (error) {
+            console.error('Error fetching word:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     useEffect(() => {
-        // fetch("https://random-word-api.herokuapp.com/word").
-        //     then(res => res.json()).
-        //     then(data => {
-        //         const fetchedWord = data[0].toUpperCase();
-        //         console.log(fetchedWord);
-        //         setWord(fetchedWord);
-        //     })
-        fetch('https://random-word-api.vercel.app/api?words')
-            .then(res => res.json())
-            .then(data => {
-                const fetchedWord = data[0].toUpperCase();
-                console.log(fetchedWord);
-                setWord(fetchedWord);
-            })
-    }, [])
+        if (fetchedRef.current) return;
+        fetchedRef.current = true;
+        fetchWord();
+    }, []);
 
     const handleGuess = (letter) => {
-        if (guessedLetters.includes(letter)) return;
+        if (guessedLetters.includes(letter) || wrongGuessedLetters.includes(letter)) return;
 
         if (word.includes(letter)) {
             setGuessedLetters([...guessedLetters, letter]);
         } else {
-            setWrongGuesses(wrongGuesses + 1);
+            setWrongGuessedLetters([...wrongGuessedLetters, letter]);
+            setWrongGuesses(prev => prev + 1);
         }
     };
 
-    function handleButton() {
-        location.reload();
-    }
+    const resetButton = () => {
+        // Reset state variables
+        setWord("HANGMAN");
+        setHint("");
+        setGuessedLetters([]);
+        setWrongGuessedLetters([]);
+        setWrongGuesses(0);
+
+        // Refetch a new word if needed
+        fetchWord();
+    };
 
     const isGameOver = wrongGuesses >= 6;
     const isGameWon = word.split("").every(letter => guessedLetters.includes(letter));
@@ -47,14 +67,22 @@ const Game = () => {
     return (
         <div className="inner-body">
             <h1>Hangman Game</h1>
-            <Word
-                word={word}
-                guessedLetters={guessedLetters}
-            />
+
+            {isLoading ? (
+                <div className="loading-bar word-container">
+                    <p>Loading...</p>
+                </div>
+            ) : (
+                <div>
+                    <Word word={word} guessedLetters={guessedLetters} />
+                    <p>Hint: {hint}</p>
+                </div>
+            )}
 
             <Keyboard
                 handleGuess={handleGuess}
                 guessedLetters={guessedLetters}
+                wrongGuessedLetters={wrongGuessedLetters}
                 isDisabled={isGameOver}
             />
 
@@ -65,13 +93,19 @@ const Game = () => {
                     {!(isGameOver || isGameWon) && <p>The number of guesses remaining {6 - wrongGuesses}. </p>}
                     {
                         (isGameOver || isGameWon) &&
-                        <button className="btn-play-again" onClick={handleButton}>Play again</button>
+                        <button className="btn-play-again" onClick={resetButton}>Play again</button>
                     }
                 </div>
                 <div className="game-modal">
                     <img src={`hangman-${wrongGuesses}.svg`} alt="" />
                 </div>
             </div>
+            {isGameWon && (
+                <Confetti
+                    width={document.body.scrollWidth}
+                    height={document.body.scrollHeight}
+                />
+            )}
         </div>
     );
 };

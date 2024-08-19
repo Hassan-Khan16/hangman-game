@@ -1,6 +1,6 @@
 import React from "react";
 
-const Keyboard = ({ isDisabled, handleGuess, guessedLetters }) => {
+const Keyboard = ({ handleGuess, guessedLetters, wrongGuessedLetters,isDisabled }) => {
   const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
   return (
@@ -9,7 +9,7 @@ const Keyboard = ({ isDisabled, handleGuess, guessedLetters }) => {
         <button
           key={letter}
           onClick={() => handleGuess(letter)}
-          disabled={isDisabled || guessedLetters.includes(letter)}
+          disabled={isDisabled || (guessedLetters.includes(letter) || wrongGuessedLetters.includes(letter))}
           className="keyboard-button"
         >
           {letter}
