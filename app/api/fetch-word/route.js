@@ -71,15 +71,23 @@ function getRandomWord() {
     return wordList[randomIndex];
 }
 
-export async function GET() {
+export const fetchCache = 'force-no-store'; 
+
+export async function GET(request) {
+    // Dummy check to make sure Nextjs doesn't 
+    // save this as static in production.
+    if (request.url.length < 0){
+        return new Response("Error: Invalid request URL", { status: 400 });
+    }
+
     try {
-        const { word, hint } = getRandomWord();
+        const randomWord = getRandomWord();
+        const { word, hint } = randomWord;
 
         return new Response(JSON.stringify({ word, hint }), {
             status: 200,
             headers: {
                 'Content-Type': 'application/json',
-                "Cache-Control": "no-cache, no-store, must-revalidate",
             },
         });
     } catch (error) {

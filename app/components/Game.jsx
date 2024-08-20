@@ -16,9 +16,7 @@ const Game = () => {
 
     const fetchWord = async () => {
         try {
-            const response = await fetch('/api/fetch-word',{
-                cache: "no-store",
-            });
+            const response = await fetch('/api/fetch-word');
             if (response.ok) {
                 const data = await response.json();
                 setWord(data.word.toUpperCase());
