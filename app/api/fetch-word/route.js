@@ -79,6 +79,7 @@ export async function GET() {
             status: 200,
             headers: {
                 'Content-Type': 'application/json',
+                "Cache-Control": "no-cache, no-store, must-revalidate",
             },
         });
     } catch (error) {

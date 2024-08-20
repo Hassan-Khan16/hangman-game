@@ -1,0 +1,11 @@
+{
+    "routes": [
+      {
+        "src": "/api/fetch-word",
+        "headers": {
+          "Cache-Control": "no-cache, no-store, must-revalidate"
+        }
+      }
+    ]
+  }
+  

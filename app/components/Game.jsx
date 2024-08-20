@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import Word from './Word';
 import Keyboard from './Keyboard';
 import Confetti from 'react-confetti'
@@ -11,13 +11,14 @@ const Game = () => {
     const [hint, setHint] = useState("");
     const [guessedLetters, setGuessedLetters] = useState([]);
     const [wrongGuessedLetters, setWrongGuessedLetters] = useState([]);
-    const [wrongGuesses, setWrongGuesses] = useState(0);
+    const [wrongGuesses, setWrongGuesses] = useState(0); 
     const [isLoading, setIsLoading] = useState(true);
-    const fetchedRef = useRef(false);
 
     const fetchWord = async () => {
         try {
-            const response = await fetch('/api/fetch-word');
+            const response = await fetch('/api/fetch-word',{
+                cache: "no-store",
+            });
             if (response.ok) {
                 const data = await response.json();
                 setWord(data.word.toUpperCase());
@@ -34,8 +35,6 @@ const Game = () => {
     };
 
     useEffect(() => {
-        if (fetchedRef.current) return;
-        fetchedRef.current = true;
         fetchWord();
     }, []);
 
