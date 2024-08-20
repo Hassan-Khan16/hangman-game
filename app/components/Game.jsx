@@ -4,6 +4,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import Word from './Word';
 import Keyboard from './Keyboard';
 import Confetti from 'react-confetti'
+import Image from 'next/image';
 
 const Game = () => {
     const [word, setWord] = useState("HANGMAN");
@@ -97,7 +98,7 @@ const Game = () => {
                     }
                 </div>
                 <div className="game-modal">
-                    <img src={`hangman-${wrongGuesses}.svg`} alt="" />
+                <Image src={`/hangman-${wrongGuesses}.svg`} alt="" width={300} height={300} />
                 </div>
             </div>
             {isGameWon && (
