@@ -49,8 +49,7 @@ const Game = () => {
 
     const resetButton = () => {
         // Reset state variables
-        setWord("HANGMAN");
-        setHint("");
+        setIsLoading(true);
         setGuessedLetters([]);
         setWrongGuessedLetters([]);
         setWrongGuesses(0);
